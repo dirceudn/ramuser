@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ranuser/presentation/coreui/loading_indicator.dart';
 
 class UserItem extends StatelessWidget {
   final String id;
@@ -15,9 +17,16 @@ class UserItem extends StatelessWidget {
       child: ListTile(
           title: Text(name),
           subtitle: Text(phoneNumer),
-          leading: const CircleAvatar(
-              backgroundImage:
-                  NetworkImage("https://lorempixel.com/640/480/cats")),
+          leading: CachedNetworkImage(
+        imageUrl: photo,
+        imageBuilder: (context, imageProvider) => CircleAvatar(
+          radius: 20,
+          backgroundImage: imageProvider,
+        ),
+        placeholder: (context, url) =>
+            LoadingIndicator(typeIndicator: CircularProgressType()),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+      ),
           trailing: const Icon(Icons.contact_page_outlined)),
     );
   }

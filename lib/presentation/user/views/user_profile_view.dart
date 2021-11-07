@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ranuser/core/home/api/model/users_reponse.dart';
@@ -5,6 +6,7 @@ import 'package:ranuser/presentation/coreui/box.dart';
 import 'package:ranuser/presentation/coreui/colors.dart';
 import 'package:ranuser/presentation/coreui/core_constants.dart';
 import 'package:ranuser/presentation/coreui/divider.dart';
+import 'package:ranuser/presentation/coreui/loading_indicator.dart';
 import 'package:ranuser/presentation/coreui/row.dart';
 import 'package:ranuser/presentation/coreui/text.dart';
 
@@ -28,9 +30,15 @@ class UserProfile extends StatelessWidget {
     final profileImg = Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0),
       alignment: FractionalOffset.center,
-      child: CircleAvatar(
-        backgroundImage: NetworkImage(photo),
-        radius: 50,
+      child: CachedNetworkImage(
+        imageUrl: photo,
+        imageBuilder: (context, imageProvider) => CircleAvatar(
+          radius: 50,
+          backgroundImage: imageProvider,
+        ),
+        placeholder: (context, url) =>
+            LoadingIndicator(typeIndicator: CircularProgressType()),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
     );
     final profileContent = Container(

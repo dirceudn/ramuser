@@ -25,9 +25,8 @@ class RandomDataSource implements RandomDataSourceContract {
       );
 
       var response = await client.get<Map<String, dynamic>>(
-          "https://randomapi.com/api/61841g64?key=Z2X1-2MDS-HLQW-ISMG&seed=random&results=25");
+          "https://randomapi.com/api/61841g64?key=Z2X1-2MDS-HLQW-ISMG&seed=random&results=25"); // api call by default with no custom params
       var jsonBody = response.data;
-      print("body $jsonBody");
       if (jsonBody != null) {
          listOfUsers =  Result.fromJson(jsonBody).results;
       } 
